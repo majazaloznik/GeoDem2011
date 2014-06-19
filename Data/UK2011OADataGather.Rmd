@@ -1,0 +1,99 @@
+# UK 2011 Census Output Area Key and Quick Statistics Import
+
+<p>Maja Zalo&#382;nik </p>
+17.6.2014
+
+----------
+
+This code is for the import and cleaning up of the June 2014 release from the ONS.
+
+The dataset contains 26 Key statistics and 47 Quick Statistics, so all together that means 73 tables to be read.
+
+Three issues are solved with this code:
+- the fact that the tables have three-row-headers.
+- the fact that in this release the tables have randomly from 3 to 7 empty rows appended at the end. 
+- the fact that some tables also have extra empty columns appended on the right.
+
+--------
+
+Download the zipped folder into a tempfile.
+```{r Download}
+url <- "http://data.statistics.gov.uk/Census/KS_QS_OA_UK_V1.zip"
+temp <- tempfile()
+download.file(url, temp)
+# get list of file names
+file.names <- unzip(temp, list=TRUE)$Name[2:74]
+table.names <- substr(file.names, 18, 22)
+
+```
+
+
+Let's check that the The 73 tables in the dataset have the same number of rows
+```{r TableLenght}
+
+table.nrows <- unlist(plyr::llply(file.names, function(n){
+                length(count.fields(unzip(temp,n)))
+                })) 
+unique(table.nrows)
+
+```
+
+Interesting. They do not. I wonder why? (I asked the ONS, they don't see the problem..)
+
+Now we check the assumption that all the tables have 3 header rows, 232,296 OA rows and between 3 to 7 extra empty rows.
+
+```{r CheckEmptyRows}
+# Check that the first four rows in the first column are all the same
+
+first.four.rows.C1 <- lapply(file.names, function(n){
+  read.csv(unzip(temp,n), nrows=4, header=FALSE, stringsAsFactors = FALSE)[1]
+}
+)
+
+# if they are all the same, then the following is TRUE
+length(unique(first.four.rows.C1)) == 1
+
+```
+
+OK, now we know there are always 3 header rows in each table. Let's make them into variable names
+
+```{r FixHeaders}
+# first uxtract only the top three rows from each table
+list.all.headers <- lapply(file.names, function(n){
+  read.csv(unzip(temp,n), nrows=3, header=FALSE, stringsAsFactors = FALSE)
+}
+)
+
+# create a list of variable names pasted from the three header rows in each table
+all.var.names<- lapply(1:73, function(i) {
+  var.names <- list.all.headers[[i]][3,1]
+  for (v in 2:length(list.all.headers[[i]])){
+    x <- list.all.headers[[i]][v]
+    nx <- stringr::str_replace_all(string=paste(x[1,], x[2,], x[3,], sep="--"), pattern=" ", repl=".")
+    var.names <- c(var.names, nx)
+  }
+  return(var.names)
+}
+)
+
+# also to keep it neat, give the list the correct names
+names(all.var.names) <- table.names
+```
+
+Now we can actually import the tables and add the appropriate variable names
+
+```{r Import tables}
+all.tables <- lapply(file.names, function(n){
+  read.csv(unzip(temp,n), nrows=232296, skip = 3, header=FALSE, stringsAsFactors = FALSE)
+}
+)
+# add the variable names to each of the 73 tables
+for (i in 1:73) {
+  names(all.tables[[i]]) <- all.var.names[[i]]
+}
+
+# add the table names to the list
+names(all.tables) <- table.names
+```
+head(all.tables[[1]])
+all.var.names[1]
