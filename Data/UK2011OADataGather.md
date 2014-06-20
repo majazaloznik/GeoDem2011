@@ -3,17 +3,19 @@
 <p>Maja Zalo&#382;nik </p>
 20.6.2014
 
+GitHub Repo: https://github.com/majazaloznik/GeoDem2011
+
 ----------
 
 This code is for the import and cleaning up of the June 2014 release from the ONS.
 
 The dataset contains 26 Key statistics and 47 Quick Statistics, so all together that means 73 tables to be read.
 
-Three issues are solved with this code:
+Issues are solved with this code:
 - the fact that the tables have three-row-headers.
 - the fact that in this release the tables have randomly from 3 to 7 empty rows appended at the end. 
 - the fact that some tables also have extra empty columns appended on the right.
-- the fact that the Scottish OAs have Excel formatted 1000 comma separators, which mean they are imported as character strings...
+- the fact that the Scottish OAs have Excel formatted 1000 comma separators, which means they are imported as character strings...
 - KS501 and QS501 have variables that are not applicable in Scotland, which is indicated by a ":". These are removed completely here. 
 
 To Do:
@@ -22,9 +24,12 @@ To Do:
 
 --------
 
+
+
 Download the zipped folder into a tempfile.
 
 ```r
+
 url <- "http://data.statistics.gov.uk/Census/KS_QS_OA_UK_V1.zip"
 temp <- tempfile()
 download.file(url, temp)
@@ -55,7 +60,7 @@ all.var.names <- lapply(1:73, function(i) {
     }
     return(var.names)
 })
-# also to keep it neat, give the list the correct names
+# also to keep it safe, give the list the correct names
 names(all.var.names) <- table.names
 ```
 

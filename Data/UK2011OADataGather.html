@@ -185,19 +185,21 @@ hljs.initHighlightingOnLoad();
 
 <p>20.6.2014</p>
 
+<p>GitHub Repo: <a href="https://github.com/majazaloznik/GeoDem2011">https://github.com/majazaloznik/GeoDem2011</a></p>
+
 <hr/>
 
 <p>This code is for the import and cleaning up of the June 2014 release from the ONS.</p>
 
 <p>The dataset contains 26 Key statistics and 47 Quick Statistics, so all together that means 73 tables to be read.</p>
 
-<p>Three issues are solved with this code:</p>
+<p>Issues are solved with this code:</p>
 
 <ul>
 <li>the fact that the tables have three-row-headers.</li>
 <li>the fact that in this release the tables have randomly from 3 to 7 empty rows appended at the end. </li>
 <li>the fact that some tables also have extra empty columns appended on the right.</li>
-<li>the fact that the Scottish OAs have Excel formatted 1000 comma separators, which mean they are imported as character strings&hellip;</li>
+<li>the fact that the Scottish OAs have Excel formatted 1000 comma separators, which means they are imported as character strings&hellip;</li>
 <li>KS501 and QS501 have variables that are not applicable in Scotland, which is indicated by a &ldquo;:&rdquo;. These are removed completely here. </li>
 </ul>
 
@@ -205,13 +207,15 @@ hljs.initHighlightingOnLoad();
 
 <ul>
 <li>nicer variable names</li>
+<li>overlap between KS and QS?</li>
 </ul>
 
-<h2>- overlap between KS and QS?</h2>
+<hr/>
 
 <p>Download the zipped folder into a tempfile.</p>
 
-<pre><code class="r">url &lt;- &quot;http://data.statistics.gov.uk/Census/KS_QS_OA_UK_V1.zip&quot;
+<pre><code class="r">
+url &lt;- &quot;http://data.statistics.gov.uk/Census/KS_QS_OA_UK_V1.zip&quot;
 temp &lt;- tempfile()
 download.file(url, temp)
 # get list of file names
@@ -238,7 +242,7 @@ all.var.names &lt;- lapply(1:73, function(i) {
     }
     return(var.names)
 })
-# also to keep it neat, give the list the correct names
+# also to keep it safe, give the list the correct names
 names(all.var.names) &lt;- table.names
 </code></pre>
 
