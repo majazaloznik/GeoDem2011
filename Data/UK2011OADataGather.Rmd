@@ -3,7 +3,7 @@
 <p>Maja Zalo&#382;nik </p>
 20.6.2014
 
-GitHub Repo: https://github.com/majazaloznik/GeoDem2011
+<a href="https://github.com/majazaloznik/GeoDem2011" target="_top"/>GitHub Repo</a>
 
 ----------
 
@@ -19,6 +19,7 @@ Issues are solved with this code:
 - KS501 and QS501 have variables that are not applicable in Scotland, which is indicated by a ":". These are removed completely here. 
 
 To Do:
+- merge and add the geography higher areas lookup
 - nicer variable names
 - overlap between KS and QS?
 

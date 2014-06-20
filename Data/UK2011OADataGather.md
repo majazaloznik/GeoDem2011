@@ -3,7 +3,7 @@
 <p>Maja Zalo&#382;nik </p>
 20.6.2014
 
-GitHub Repo: https://github.com/majazaloznik/GeoDem2011
+<a href="https://github.com/majazaloznik/GeoDem2011" target="_top"/>GitHub Repo</a>
 
 ----------
 
@@ -19,6 +19,7 @@ Issues are solved with this code:
 - KS501 and QS501 have variables that are not applicable in Scotland, which is indicated by a ":". These are removed completely here. 
 
 To Do:
+- merge and add the geography higher areas lookup
 - nicer variable names
 - overlap between KS and QS?
 
@@ -36,6 +37,7 @@ download.file(url, temp)
 # get list of file names
 file.names <- unzip(temp, list = TRUE)$Name[2:74]
 table.names <- substr(file.names, 18, 22)
+
 ```
 
 
@@ -93,6 +95,7 @@ all.tables$KS201 <- all.tables$KS201[1:12]
 # remove variables with missing values in KS501 and QS501
 all.tables$KS501 <- all.tables$KS501[, -c(6, 9)]
 all.tables$QS501 <- all.tables$QS501[, -c(6, 9)]
+
 ```
 
 

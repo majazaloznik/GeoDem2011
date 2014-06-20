@@ -185,7 +185,7 @@ hljs.initHighlightingOnLoad();
 
 <p>20.6.2014</p>
 
-<p>GitHub Repo: <a href="https://github.com/majazaloznik/GeoDem2011">https://github.com/majazaloznik/GeoDem2011</a></p>
+<p><a href="https://github.com/majazaloznik/GeoDem2011" target="_top"/>GitHub Repo</a></p>
 
 <hr/>
 
@@ -206,6 +206,7 @@ hljs.initHighlightingOnLoad();
 <p>To Do:</p>
 
 <ul>
+<li>merge and add the geography higher areas lookup</li>
 <li>nicer variable names</li>
 <li>overlap between KS and QS?</li>
 </ul>
@@ -221,6 +222,7 @@ download.file(url, temp)
 # get list of file names
 file.names &lt;- unzip(temp, list = TRUE)$Name[2:74]
 table.names &lt;- substr(file.names, 18, 22)
+
 </code></pre>
 
 <p>OK, now we know there are always 3 header rows in each table. Let&#39;s make them into variable names.</p>
@@ -270,6 +272,7 @@ all.tables$KS201 &lt;- all.tables$KS201[1:12]
 # remove variables with missing values in KS501 and QS501
 all.tables$KS501 &lt;- all.tables$KS501[, -c(6, 9)]
 all.tables$QS501 &lt;- all.tables$QS501[, -c(6, 9)]
+
 </code></pre>
 
 <p>Then we need to deal with the comma separator for thousands. These automatically got imported as &ldquo;character&rdquo;. So assuming all the variables (except the OA code) should be numeric, we look for class == &ldquo;character&rdquo;, and within them use grep to remove the commas..</p>
